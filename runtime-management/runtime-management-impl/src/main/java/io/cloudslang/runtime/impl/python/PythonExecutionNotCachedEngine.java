@@ -7,14 +7,12 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  *******************************************************************************/
-
 package io.cloudslang.runtime.impl.python;
 
 import io.cloudslang.dependency.api.services.DependencyService;
 import io.cloudslang.runtime.api.python.PythonEvaluationResult;
 import io.cloudslang.runtime.api.python.PythonExecutionResult;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -23,7 +21,8 @@ import java.util.Set;
 /**
  * Created by Genadi Rabinovich, genadi@hpe.com on 05/05/2016.
  */
-public class PythonExecutionNotCachedEngine implements PythonExecutionEngine{
+public class PythonExecutionNotCachedEngine implements PythonExecutionEngine {
+
     @Autowired
     private DependencyService dependencyService;
 
@@ -33,7 +32,7 @@ public class PythonExecutionNotCachedEngine implements PythonExecutionEngine{
         try {
             return pythonExecutor.exec(script, vars);
         } finally {
-            pythonExecutor.release();
+            pythonExecutor.close();
         }
     }
 
@@ -43,7 +42,7 @@ public class PythonExecutionNotCachedEngine implements PythonExecutionEngine{
         try {
             return pythonExecutor.eval(prepareEnvironmentScript, script, vars);
         } finally {
-            pythonExecutor.release();
+            pythonExecutor.close();
         }
     }
 }
